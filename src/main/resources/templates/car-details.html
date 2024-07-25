@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/images/favicon.ico">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title>Cars</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/css/fontawesome.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/owl.css">
+
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+
+    <!-- Header -->
+    <header th:insert="~{blocks/header :: header}"></header>
+
+    <!-- Page Content -->
+
+    <div class="products">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+              <div class="car_image">
+                  <span class="car_rating" th:text="${#numbers.formatDecimal(car.rating, 1, 2)}">5.0</span>
+                  <img th:src="'/uploads/'+${car.avatar}" alt="" class="wc-image" style="height: 100%;max-width: 100%;">
+                  <div th:if="${user}" class="car_rate">
+                      <div class="rating_desc"><p>Your Vote :</p></div>
+                      <form  th:action="'/car-details/rating/'+ ${car.car_id} + '/' +${user.user_id}" method="post" class="sky-form">
+                          <fieldset>
+                              <section>
+                                  <div class="rating">
+                                      <input type="radio" name="rating" id="stars-rating-5" value="5">
+                                      <label for="stars-rating-5"><i class="icon-star"></i></label>
+                                      <input type="radio" name="rating" id="stars-rating-4" value="4">
+                                      <label for="stars-rating-4"><i class="icon-star"></i></label>
+                                      <input type="radio" name="rating" id="stars-rating-3" value="3">
+                                      <label for="stars-rating-3"><i class="icon-star"></i></label>
+                                      <input type="radio" name="rating" id="stars-rating-2" value="2">
+                                      <label for="stars-rating-2"><i class="icon-star"></i></label>
+                                      <input type="radio" name="rating" id="stars-rating-1" value="1">
+                                      <label for="stars-rating-1"><i class="icon-star"></i></label>
+                                  </div>
+                                  <input type="hidden" name="carId" th:value="${car.car_id}">
+                                  <input type="hidden" name="userId" th:value="${user.user_id}">
+                                  <button style="float:right;" class="filled-button" type="submit">Rate</button>
+                              </section>
+                          </fieldset>
+                      </form>
+                      <div class="clearfix"> </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-md-6">
+            <form action="#" method="post" class="form">
+              <ul class="list-group list-group-flush">
+               <li class="list-group-item">
+                    <div class="clearfix">
+                         <span class="pull-left">Type</span>
+                         <strong th:if="${car.type=='used'}" class="pull-right"> Used vehicle</strong>
+                        <strong th:if="${car.type=='new'}" class="pull-right"> New vehicle</strong>
+                    </div>
+               </li>
+
+               <li class="list-group-item">
+                    <div class="clearfix">
+                         <span class="pull-left">Make</span>
+
+                         <strong th:text="${car.make}" class="pull-right"></strong>
+                    </div>
+               </li>
+
+               <li class="list-group-item">
+                    <div class="clearfix">
+                         <span class="pull-left"> Model</span>
+
+                         <strong th:text="${car.model}" class="pull-right"></strong>
+                    </div>
+               </li>
+
+               <li class="list-group-item">
+                    <div class="clearfix">
+                         <span class="pull-left">First registration</span>
+
+                         <strong th:text="${car.date}" class="pull-right"></strong>
+                    </div>
+               </li>
+
+               <li class="list-group-item">
+                    <div class="clearfix">
+                         <span class="pull-left">Mileage</span>
+
+                         <strong th:text="${car.mileage}+km" class="pull-right"></strong>
+                    </div>
+               </li>
+
+               <li class="list-group-item">
+                    <div class="clearfix">
+                         <span class="pull-left">Fuel</span>
+
+                         <strong th:text="${car.fuel}" class="pull-right"></strong>
+                    </div>
+               </li>
+
+               <li class="list-group-item">
+                    <div class="clearfix">
+                         <span class="pull-left">Engine size</span>
+
+                         <strong th:text="${car.enginesize}+cc" class="pull-right"></strong>
+                    </div>
+               </li>
+
+               <li class="list-group-item">
+                    <div class="clearfix">
+                         <span class="pull-left">Power</span>
+
+                         <strong th:text="${car.power}+hp" class="pull-right"></strong>
+                    </div>
+               </li>
+
+
+               <li class="list-group-item">
+                    <div class="clearfix">
+                         <span class="pull-left">Gearbox</span>
+
+                         <strong th:text="${car.gearbox}" class="pull-right"></strong>
+                    </div>
+               </li>
+
+               <li class="list-group-item">
+                    <div class="clearfix">
+                         <span class="pull-left">Number of seats</span>
+
+                         <strong th:text="${car.seats}" class="pull-right"></strong>
+                    </div>
+               </li>
+
+               <li class="list-group-item">
+                    <div class="clearfix">
+                         <span class="pull-left">Doors</span>
+
+                         <strong th:text="${car.doors}" class="pull-right"></strong>
+                    </div>
+               </li>
+
+               <li class="list-group-item">
+                    <div class="clearfix">
+                         <span class="pull-left">Color</span>
+
+                         <strong th:text="${car.color}" class="pull-right"></strong>
+                    </div>
+               </li>
+                  <li class="list-group-item">
+                      <div class="clearfix">
+                          <span class="pull-left">Price</span>
+
+                          <strong th:text="${car.price}+'$'" class="pull-right"></strong>
+                      </div>
+                  </li>
+              </ul>
+            </form>
+              <form th:action="'/car-details/addToFavorites/'+ ${car.car_id}" method="post" class="form" >
+                  <button  class="filled-button" type="submit">Add to Favorites</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="section-heading">
+              <h2>Vehicle Description</h2>
+            </div>
+
+            <div class="left-content">
+              <p th:text="${car.description}"></p>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="section-heading">
+              <h2>Vehicle Extras</h2>
+            </div>
+            
+            <div class="left-content">
+              <p th:text="${car.extras}"></p>
+            </div>
+          </div>
+            <div class="col-md-12">
+                <form th:if="${user}" th:action="'/car-details/comments/'+ ${car.car_id} + '/' +${user.user_id}" method="post">
+                    <input class="form-control input-field" type="text" name="comment" placeholder="Введите ваш комментарий" required>
+                    <input type="hidden" name="car_id" th:value="${car.car_id}">
+                    <input type="hidden" name="user_id" th:value="${user.user_id}">
+                    <button class="filled-button" type="submit">Отправить комментарий</button>
+                </form>
+            </div>
+            <div class="col-md-12">
+                <div th:if="${not #lists.isEmpty(comments)}">
+                    <h3>Комментарии:</h3>
+                    <ul class="comment-list">
+                        <li th:each="comment : ${comments}">
+                            <div class="comment">
+                                <strong th:text="${comment.login}"></strong>
+                                <p th:text="${comment.commentText}"></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+    <footer th:insert="~{blocks/footer :: footer}">
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Book Now</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="contact-form">
+              <form action="#" id="contact">
+                  <div class="row">
+                       <div class="col-md-6">
+                          <fieldset>
+                            <input type="text" class="form-control" placeholder="Pick-up location" required="">
+                          </fieldset>
+                       </div>
+
+                       <div class="col-md-6">
+                          <fieldset>
+                            <input type="text" class="form-control" placeholder="Return location" required="">
+                          </fieldset>
+                       </div>
+                  </div>
+
+                  <div class="row">
+                       <div class="col-md-6">
+                          <fieldset>
+                            <input type="text" class="form-control" placeholder="Pick-up date/time" required="">
+                          </fieldset>
+                       </div>
+
+                       <div class="col-md-6">
+                          <fieldset>
+                            <input type="text" class="form-control" placeholder="Return date/time" required="">
+                          </fieldset>
+                       </div>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Enter full name" required="">
+
+                  <div class="row">
+                       <div class="col-md-6">
+                          <fieldset>
+                            <input type="text" class="form-control" placeholder="Enter email address" required="">
+                          </fieldset>
+                       </div>
+
+                       <div class="col-md-6">
+                          <fieldset>
+                            <input type="text" class="form-control" placeholder="Enter phone" required="">
+                          </fieldset>
+                       </div>
+                  </div>
+              </form>
+           </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary">Book Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Additional Scripts -->
+    <script src="/js/custom.js"></script>
+    <script src="/js/owl.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentPath = window.location.pathname;
+            var navItems = document.querySelectorAll('.nav-item');
+
+            navItems.forEach(function(item) {
+                var link = item.querySelector('.nav-link');
+                if (link && link.getAttribute('href') === currentPath) {
+                    item.classList.add('active');
+                }
+
+                // Check if item is a dropdown and contains links
+                var dropdownMenu = item.querySelector('.dropdown-menu');
+                if (dropdownMenu) {
+                    var dropdownLinks = dropdownMenu.querySelectorAll('a');
+                    dropdownLinks.forEach(function(dropdownLink) {
+                        if (dropdownLink.getAttribute('href') === currentPath) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+  </body>
+
+</html>

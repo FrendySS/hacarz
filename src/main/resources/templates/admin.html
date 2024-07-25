@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title>Admin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="css/fontawesome.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/owl.css">
+
+</head>
+
+<body>
+
+<!-- ***** Preloader Start ***** -->
+<div id="preloader">
+    <div class="jumper">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<!-- ***** Preloader End ***** -->
+
+<!-- Header -->
+<header th:insert="~{blocks/header :: header}"></header>
+
+<div class="forms">
+    <form  action="" method="post" enctype="multipart/form-data" class="form-signup">
+        <div class="text-center" style="color:green" th:if="${message}" th:text="${message}"></div>
+        <h2 class="text-center">Добавление машины</h2>
+        <div>
+            <label for="type">Тип:</label>
+            <select name="type" id="type" class="form-control input-field">
+                <option value="used">Б/У</option>
+                <option value="new">Новая</option>
+            </select>
+            <span th:if="${errors}" th:text="${errors[type]}" class="error"> </span>
+        </div>
+        <div>
+            <label for="make">Марка:</label>
+            <input type="text" name="make" id="make" class="form-control input-field">
+            <span th:if="${errors}" th:text="${errors[make]}" class="error"> </span>
+        </div>
+        <div>
+            <label for="carmodel">Модель:</label>
+            <input type="text" name="carmodel" id="carmodel" class="form-control input-field">
+            <span th:if="${errors}" th:text="${errors[carmodel]}" class="error"> </span>
+        </div>
+        <div>
+            <label for="date">Дата:</label>
+            <input type="text" name="date" id="date" class="form-control input-field">
+            <span th:if="${errors}" th:text="${errors[date]}" class="error"> </span>
+        </div>
+        <div>
+            <label for="mileage">Пробег:</label>
+            <input type="number" name="mileage" id="mileage" value="0" class="form-control input-field">
+            <span th:if="${errors}" th:text="${errors[mileage]}" class="error"> </span>
+        </div>
+        <div>
+            <label for="fuel">Топливо:</label>
+            <select name="fuel" id="fuel" class="form-control input-field">
+                <option value="petrol">Бензин</option>
+                <option value="diesel">Дизель</option>
+                <option value="gas">Газ</option>
+            </select>
+            <span th:if="${errors}" th:text="${errors[fuel]}" class="error"> </span>
+        </div>
+        <div>
+            <label for="enginesize">Объем двигателя:</label>
+            <input type="number" name="enginesize" id="enginesize" value="0" class="form-control input-field">
+            <span th:if="${errors}" th:text="${errors[enginesize]}" class="error"> </span>
+        </div>
+        <div>
+            <label for="power">Мощность:</label>
+            <input type="number" name="power" id="power" value="0" class="form-control input-field">
+            <span th:if="${errors}" th:text="${errors[power]}" class="error"> </span>
+        </div>
+        <div>
+            <label for="gearbox">КПП:</label>
+            <select name="gearbox" id="gearbox" class="form-control input-field">
+                <option value="manual">Механика</option>
+                <option value="auto">Автомат</option>
+                <option value="robot">Робот</option>
+            </select>
+            <span th:if="${errors}" th:text="${errors[gearbox]}" class="error"> </span>
+        </div>
+        <div>
+            <label for="seats">Сиденья:</label>
+            <input type="number" name="seats" id="seats" value="0" class="form-control input-field">
+            <span th:if="${errors}" th:text="${errors[seats]}" class="error"> </span>
+        </div>
+        <div>
+            <label for="doors">Двери:</label>
+            <input type="number" name="doors" id="doors" value="0" class="form-control input-field">
+            <span th:if="${errors}" th:text="${errors[doors]}" class="error"> </span>
+        </div>
+        <div>
+            <label for="color">Цвет:</label>
+            <input type="text" name="color" id="color" class="form-control input-field">
+            <span th:if="${errors}" th:text="${errors[color]}" class="error"> </span>
+        </div>
+        <div>
+            <label for="description">Описание:</label>
+            <input type="text" name="description" id="description" class="form-control input-field">
+            <span th:if="${errors}" th:text="${errors[description]}" class="error"> </span>
+        </div>
+        <div>
+            <label for="extras">Экстра:</label>
+            <input type="text" name="extras" id="extras" class="form-control input-field">
+        </div>
+        <div>
+            <label for="price">Цена:</label>
+            <input type="number" name="price" id="price" value="0" class="form-control input-field">
+            <span th:if="${errors}" th:text="${errors[price]}" class="error"> </span>
+        </div>
+        <div>
+            <label for="avatar">Avatar:</label>
+            <input type="file" name="avatar" id="avatar" accept="image/*">
+            <span th:if="${errors}" th:text="${errors[avatar]}" class="error"> </span>
+        </div>
+        <input type="submit" value="Добавление">
+    </form>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div th:each="el :${carsList}" class="col-md-4">
+            <div class="product-item">
+                <a th:href="'/car-details/'+${el.car_id}"><img th:src="'/uploads/'+${el.avatar}" alt=""></a>
+                <div class="down-content">
+                    <a th:href="'/car-details/'+${el.car_id}"><h4 th:text="${el.make}+' '+${el.model}">Lorem ipsum dolor sit amet, consectetur</h4></a>
+
+                    <h6 th:text="${el.price}+'$'"></h6>
+
+                    <p th:text="${el.power}+'hp / '+${el.fuel}+' / '+${el.date}+' / '+${el.type}"></p>
+
+                    <small>
+                        <strong th:text="${el.mileage}+'km'" title="Author"><i class="fa fa-dashboard"></i> </strong> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong th:text="${el.enginesize} +'cc'" title="Author"><i class="fa fa-cube"></i> </strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong th:text="${el.gearbox}" title="Views"><i class="fa fa-cog"></i> </strong>
+                    </small>
+                    <form method="post" th:action="'admin/delete/'+ ${el.car_id}">
+                        <button type="submit" class="filled-button">Удалить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="~{blocks/footer :: footer}">
+</footer>
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+
+
+<!-- Additional Scripts -->
+<script src="js/custom.js"></script>
+<script src="js/owl.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var currentPath = window.location.pathname;
+        var navItems = document.querySelectorAll('.nav-item');
+
+        navItems.forEach(function(item) {
+            var link = item.querySelector('.nav-link');
+            if (link && link.getAttribute('href') === currentPath) {
+                item.classList.add('active');
+            }
+
+            // Check if item is a dropdown and contains links
+            var dropdownMenu = item.querySelector('.dropdown-menu');
+            if (dropdownMenu) {
+                var dropdownLinks = dropdownMenu.querySelectorAll('a');
+                dropdownLinks.forEach(function(dropdownLink) {
+                    if (dropdownLink.getAttribute('href') === currentPath) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+        });
+    });
+</script>
+</body>
+
+</html>
