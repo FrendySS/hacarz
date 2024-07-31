@@ -14,9 +14,10 @@ import java.util.regex.Pattern;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-    private static final String EMAIL_PATTERN = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-    private static final Pattern ALLOWED_CHARACTERS_PATTERN = Pattern.compile("^[a-zA-Z0-9.@_]+$");
-    public Map<String, String> validateUserData(String login, String email, String password, String confirmPassword) {
+    private static final String EMAIL_PATTERN = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"; //Допустимый формат эмейла
+    private static final Pattern ALLOWED_CHARACTERS_PATTERN = Pattern.compile("^[a-zA-Z0-9.@_]+$"); //Допустимый формат символов
+    public Map<String, String> validateUserData(String login, String email, String password, String confirmPassword) { //Проверка данных пользователя
+        // на пустоту, совпадение, допустимые символы и т.д. Ошибок нет = сохранение в бд, есть = отправка обратно map ошибок.
         Map<String, String> errors = new HashMap<>();
         if (!Pattern.matches(EMAIL_PATTERN, email)) {
             errors.put("email", "Неверный формат email");
@@ -53,7 +54,7 @@ public class UserService {
         }
         return errors;
     }
-    public Map<String, String> validatePassword(User user, String oldpassword, String password, String passwordrepeat) {
+    public Map<String, String> validatePassword(User user, String oldpassword, String password, String passwordrepeat) { //Проверка данных смены пароля.
         Map<String, String> errors = new HashMap<>();
         if(!user.getPassword().equals(oldpassword))
             errors.put("password","Неправильный старый пароль");
@@ -74,8 +75,8 @@ public class UserService {
     }
     private boolean isAllowedCharacters(String input) {
         return ALLOWED_CHARACTERS_PATTERN.matcher(input).matches();
-    }
-    public boolean authenticate(String login, String password) {
+    } // Проверка на допустимые символы
+    public boolean authenticate(String login, String password) { //Проверка данных при логине
         if(userRepository.existsByLogin(login)){
             User user = userRepository.findByLogin(login);
             return login != null && !login.isEmpty() && password != null && !password.isEmpty() && user.getPassword().equals(password);
@@ -83,8 +84,8 @@ public class UserService {
     }
     public User getUser(String login){
         return userRepository.findByLogin(login);
-    }
-    public User getUserById(long userId) {
+    } //Поиск пользователя по логину
+    public User getUserById(long userId) { //Поиск пользоваля по айди
         return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("No user found with ID " + userId));
     }

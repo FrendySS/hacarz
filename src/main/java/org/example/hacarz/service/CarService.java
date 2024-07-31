@@ -27,7 +27,7 @@ public class CarService {
     private UserListRepository userListRepository;
     @Value("${upload.path}")
     private String uploadPath;
-    public Map<String, String> validateCarData(String type,
+    public Map<String, String> validateCarData(String type,   //Проверка данных машины на пустоту, совпадение, допустимые символы и т.д. Ошибок нет = сохранение в бд, есть = отправка обратно map ошибок.
                                                String make,
                                                String model,
                                                String date,
@@ -122,15 +122,15 @@ public class CarService {
     }
     public List<Car> getCars(){
         return carRepository.findAll();
-    }
+    } //Поиск всех машин через репозиторий
     public List<Car> getCarsByName(String name){
         return carRepository.findAllByName(name);
-    }
+    } //Поиск машин через репозиторий по марке
     public Car getCarById(long id){
         return carRepository.findById(id).orElseThrow(() ->  new IllegalArgumentException("Car not found"));
-    }
+    } //Поиск машин через репозиторий по айди
     @Transactional
-    public Map<String, String> deleteCar(int id) {
+    public Map<String, String> deleteCar(int id) { //Удаление машины через репозиторий по id
         Map<String, String> errors = new HashMap<>();
         Car car = carRepository.findById((long) id).orElseThrow(() ->  new IllegalArgumentException("Car not found"));
         if(!carRepository.existsById((long) id))

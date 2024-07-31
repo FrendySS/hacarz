@@ -26,15 +26,16 @@ public class UserController {
     private FavoriteService favoriteService;
     @Autowired
     private CarService carService;
-    @GetMapping("/login")
+    @GetMapping("/login") //GET запрос на отображение страницы логина
     public String getLoginPage(Model model){
         return "login";
     }
-    @GetMapping("/register")
+    @GetMapping("/register") //GET запрос на отображение страницы регистрации
     public String getRegisterPage(Model model){
         return "register";
     }
-    @PostMapping("/register")
+    @PostMapping("/register") //POST запрос на регистрацию пользователя, отправляет данные на проверку в сервис,
+    // в зависимости от результата выводит сообщение в модель или атрибуты перехода.
     public String createUser(@RequestParam String login,
                              @RequestParam String email,
                              @RequestParam String password,
@@ -50,7 +51,8 @@ public class UserController {
         redirectAttributes.addFlashAttribute("message","Вы успешно зарегистрировались, можете войти.");
         return "redirect:/login";
     }
-    @PostMapping("/login")
+    @PostMapping("/login") //POST запрос на авторизацию пользователя, отправляет данные на проверку в сервис,
+    // в зависимости от результата выводит сообщение в модель или добавляет пользователя в сессию и переносит в профиль.
     public String login(@RequestParam("login") String login,
                         @RequestParam("password") String password,
                         HttpSession session,
@@ -63,7 +65,8 @@ public class UserController {
             return "login";
         }
     }
-    @GetMapping("/profile")
+    @GetMapping("/profile") //GET запрос на отображение страницы профиля, добавляет пользователя,
+    // его список любимого в модель
     public String userProfile(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         if (user != null) {
@@ -75,7 +78,8 @@ public class UserController {
             return "redirect:/login";
         }
     }
-    @PostMapping("/profile")
+    @PostMapping("/profile") //POST запрос на смену пароля пользователя,
+    // отправляет данные в сервис и в зависимости от результата выводит сообщение.
     public String passChange(@RequestParam("oldpassword") String oldpassword,
                              @RequestParam("password") String password,
                              @RequestParam("passwordrepeat") String passwordrepeat,
@@ -93,7 +97,8 @@ public class UserController {
             return "profile";
         }
     }
-    @PostMapping("profile/deleteFromFavorites/{carId}/{userId}")
+    @PostMapping("profile/deleteFromFavorites/{carId}/{userId}") //POST запрос на удаление из списка избранного,
+    // отправляет данные в сервис и в зависимости от результата выводит сообщение.
     public String deleteFromFavorites(@PathVariable("carId")int carId,
                                       @PathVariable("userId")int userId,
                                       RedirectAttributes redirectAttributes){
@@ -107,7 +112,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/logout")
+    @GetMapping("/logout") //GET запрос на удаление пользователя из сессии
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/login";

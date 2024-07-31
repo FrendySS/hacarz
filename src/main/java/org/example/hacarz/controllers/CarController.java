@@ -27,7 +27,8 @@ public class CarController {
     private CommentService commentService;
     @Autowired
     private FavoriteService favoriteService;
-    @GetMapping("/cars")
+    @GetMapping("/cars") //GET запрос на отображение страницы с машинами, добавляет в модель список машин,
+    // который берет из сервиса.
     public String getCarsPage(@RequestParam(required = false) String search, Model model){
         List<Car> carsList = new ArrayList<>();
         if(search!=null&&!search.isEmpty())
@@ -38,7 +39,8 @@ public class CarController {
         return "cars";
     }
 
-    @GetMapping("/car-details/{id}")
+    @GetMapping("/car-details/{id}") //GET запрос на отображение страницы с единичной машиной,
+    // добавляет в модель машину, комментарии, рейтинг, который берет из сервисов, а также пользователя из сессии.
     public String getCarPage(@PathVariable("id") int id, Model model, HttpSession httpSession){
         User user = (User) httpSession.getAttribute("user");
         Car car = carService.getCarById(id);
@@ -49,7 +51,8 @@ public class CarController {
         model.addAttribute("car", car);
         return "car-details";
     }
-    @PostMapping("/car-details/addToFavorites/{carId}")
+    @PostMapping("/car-details/addToFavorites/{carId}") //POST запрос на добавление машины в избранное,
+    // проверяет авторизацию, машину, затем добавляет в бд пользователя и машину.
     public String addToFavorites(@PathVariable("carId") int carId, HttpSession session, RedirectAttributes redirectAttributes) {
         User user = (User) session.getAttribute("user");
         if (user != null) {

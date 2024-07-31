@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "userlist")
-public class UserList {
+public class UserList {//Модель списка пользователя, автоматически создается в бд таблица userlist
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userlist_id")

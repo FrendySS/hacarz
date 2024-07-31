@@ -5,7 +5,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
 @Table(name = "comments")
-public class Comment {
+public class Comment { //Модель комментария, автоматически создается в бд таблица comments
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int comment_id;

@@ -17,7 +17,7 @@ public class FavoriteService {
     private UserListRepository userListRepository;
 
 
-    public void addToFavorites(User user, Car car) {
+    public void addToFavorites(User user, Car car) { //Добавление в избранное
         UserList existingFavorite = userListRepository.findByUserAndCar(user, car);
 
         if (existingFavorite == null) {
@@ -29,7 +29,7 @@ public class FavoriteService {
             userListRepository.save(newUserList);
         }
     }
-    public Map<String, String> deleteFavorite(User user, Car car){
+    public Map<String, String> deleteFavorite(User user, Car car){ //Удаление из избранного
         Map<String, String> errors = new HashMap<>();
         UserList userList = userListRepository.findByUserAndCar(user, car);
         if(userList==null){
@@ -41,7 +41,7 @@ public class FavoriteService {
         return errors;
     }
 
-    public List<UserList> findFavoritesByUserId(User user_id) {
+    public List<UserList> findFavoritesByUserId(User user_id) { //Поиск избранного по пользователю
         return userListRepository.findByUserAndListType(user_id, "FAVORITES");
     }
 }

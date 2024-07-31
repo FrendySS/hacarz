@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "rating")
-public class Rating {
+public class Rating { //Модель рейтинга машины, автоматически создается в бд таблица rating
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int rating_id;

@@ -15,7 +15,7 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendSimpleEmail(String to, String subject, String text) {
+    public void sendSimpleEmail(String to, String subject, String text) { //Отправка сообщения на почту
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(to);

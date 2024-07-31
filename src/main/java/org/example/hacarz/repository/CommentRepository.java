@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, Long> {
+public interface CommentRepository extends JpaRepository<Comment, Long> { //Используется для взаимодействия с таблицей comments в бд
     @Query("SELECT c FROM Comment c JOIN FETCH c.user u JOIN FETCH c.car a WHERE c.car.car_id = :carId")
-    List<Comment> findByCarId(int carId);
+    List<Comment> findByCarId(int carId); //Поиск комментов по машине
     @Query("SELECT c FROM Comment c WHERE c.user = :userId")
     List<Comment> findByCar_UserId(int userId);
-    void deleteAllByCar(Car car);
-    boolean existsByCar(Car car);
+    void deleteAllByCar(Car car); //Удаление комментов по машине
+    boolean existsByCar(Car car); //Проверка на существование комментов по машине
 }
