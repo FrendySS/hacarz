@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="images/favicon.ico">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-
-    <title>Register</title>
+    <title>Регистрация</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -18,96 +14,51 @@
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="css/fontawesome.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/owl.css">
-
 </head>
 
 <body>
 
-<!-- ***** Preloader Start ***** -->
-<div id="preloader">
-    <div class="jumper">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-</div>
-<!-- ***** Preloader End ***** -->
-
-<!-- Header -->
 <header th:insert="~{blocks/header :: header}"></header>
 
 <div class="forms">
     <div class="container">
-        <div class="container_wrap">
-                <div class="register">
-                    <form action="/register" method="post" class="form-signup">
-                        <h2 class="text-center">Регистрация</h2>
-                        <div class="register-top-grid">
-                            <div class="row">
-                                <label for="login">Логин:</label>
-                                <input type="text" name="login" id="login" class="form-control">
-                                <span th:if="${errors}" th:text="${errors[login]}" class="error"> </span>
-                            </div>
-                            <div class="row">
-                                <label for="email">Email Address:</label>
-                                <input type="email" name="email" id="email" class="form-control">
-                                <span th:if="${errors}" th:text="${errors[email]}" class="error"></span>
-                            </div>
-                            <div class="row">
-                                <label for="password">Пароль:</label>
-                                <input type="password" name="password" id="password" class="form-control">
-                                <span th:if="${errors}" th:text="${errors[password]}" class="error"></span>
-                            </div>
-                            <div class="row">
-                                <label for="confirm_password">Подтверждение пароля:</label>
-                                <input type="password" name="confirm_password" id="confirm_password" class="form-control">
-                                <span th:if="${errors}" th:text="${errors[password]}" class="error"></span>
-                            </div>
-                        </div>
-                        <input type="submit" value="Create Account">
-                    </form>
+        <div class="register">
+            <form th:action="@{/register}" th:object="${user}" method="post" class="form-signup">
+                <h2 class="text-center mb-4">Регистрация</h2>
+                <div class="form-group">
+                    <label for="login">Логин:</label>
+                    <input type="text" id="login" th:field="*{login}" class="form-control" placeholder="Введите ваш логин">
+                    <div th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="text-danger"></div>
+                    <div th:if="${errors}" th:text="${errors['login']}" class="text-danger"></div>
                 </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="Введите ваш email">
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
+                    <div th:if="${errors}" th:text="${errors['email']}" class="text-danger"></div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Введите ваш пароль">
+                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></div>
+                    <div th:if="${errors}" th:text="${errors['password']}" class="text-danger"></div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Подтверждение пароля:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Повторите пароль">
+                    <div th:if="${errors}" th:text="${errors['confirmPassword']}" class="text-danger"></div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-4">Зарегистрироваться</button>
+            </form>
         </div>
     </div>
 </div>
 
-<footer th:insert="~{blocks/footer :: footer}">
-</footer>
-
+<footer th:insert="~{blocks/footer :: footer}"></footer>
 
 <!-- Bootstrap core JavaScript -->
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 
-
-<!-- Additional Scripts -->
-<script src="js/custom.js"></script>
-<script src="js/owl.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var currentPath = window.location.pathname;
-        var navItems = document.querySelectorAll('.nav-item');
-
-        navItems.forEach(function(item) {
-            var link = item.querySelector('.nav-link');
-            if (link && link.getAttribute('href') === currentPath) {
-                item.classList.add('active');
-            }
-
-            // Check if item is a dropdown and contains links
-            var dropdownMenu = item.querySelector('.dropdown-menu');
-            if (dropdownMenu) {
-                var dropdownLinks = dropdownMenu.querySelectorAll('a');
-                dropdownLinks.forEach(function(dropdownLink) {
-                    if (dropdownLink.getAttribute('href') === currentPath) {
-                        item.classList.add('active');
-                    }
-                });
-            }
-        });
-    });
-</script>
 </body>
-
 </html>

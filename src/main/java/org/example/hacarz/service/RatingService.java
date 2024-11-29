@@ -18,7 +18,7 @@ public class RatingService {
     private CarRepository carRepository;
 
 
-    public boolean rateCar(User user, Car car, int rating) {
+    public boolean rateCar(User user, Car car, int rating) { //Оценка машины пользователем, сохранение рейтинга
         Rating existingRating = ratingRepository.findByUserAndCar(user, car);
 
         if (existingRating != null) {
@@ -36,13 +36,13 @@ public class RatingService {
         return false;
     }
 
-    private void updateCarRating(Car car) {
+    private void updateCarRating(Car car) { //Обновление рейтинга самой машины
         double newRating = calculateAverageRating(car);
         car.setRating(newRating);
         carRepository.save(car);
     }
 
-    private double calculateAverageRating(Car car) {
+    private double calculateAverageRating(Car car) { //Вычисление среднего рейтинга, используя все рейтинги определенной машины.
         List<Rating> ratings = ratingRepository.findByCar(car);
         double sum = 0;
         for (Rating rating : ratings) {

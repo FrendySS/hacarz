@@ -26,7 +26,7 @@ public class CommentController {
     private UserService userService;
     @Autowired
     private CommentService commentService;
-    @PostMapping("/{carId}/{userId}")
+    @PostMapping("/{carId}/{userId}") //POST запрос на сохранение комментария пользователя к определенной машине
     public String saveComment(@PathVariable("userId") int userId,
                               @PathVariable("carId") int carId,
                               @RequestParam("comment") String commentText,

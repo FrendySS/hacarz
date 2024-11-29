@@ -2,6 +2,7 @@ package org.example.hacarz.controllers;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.hacarz.entity.Car;
+import org.example.hacarz.entity.DeletedCar;
 import org.example.hacarz.entity.DTO.CommentDTO;
 import org.example.hacarz.entity.User;
 import org.example.hacarz.service.CarService;
@@ -21,25 +22,32 @@ import java.util.List;
 
 @Controller
 public class CarController {
+
     @Autowired
     private CarService carService;
+
     @Autowired
     private CommentService commentService;
+
     @Autowired
     private FavoriteService favoriteService;
+
+    // Отображение списка всех машин
     @GetMapping("/cars")
-    public String getCarsPage(@RequestParam(required = false) String search, Model model){
+    public String getCarsPage(@RequestParam(required = false) String search, Model model) {
         List<Car> carsList = new ArrayList<>();
-        if(search!=null&&!search.isEmpty())
+        if (search != null && !search.isEmpty()) {
             carsList = carService.getCarsByName(search);
-        else
-            carsList=carService.getCars();
+        } else {
+            carsList = carService.getCars();
+        }
         model.addAttribute("carsList", carsList);
         return "cars";
     }
 
+    // Отображение информации о конкретной машине
     @GetMapping("/car-details/{id}")
-    public String getCarPage(@PathVariable("id") int id, Model model, HttpSession httpSession){
+    public String getCarPage(@PathVariable("id") int id, Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         Car car = carService.getCarById(id);
         List<CommentDTO> comments = commentService.getCommentsByCarId(id);
@@ -49,6 +57,8 @@ public class CarController {
         model.addAttribute("car", car);
         return "car-details";
     }
+
+    // Добавление машины в избранное
     @PostMapping("/car-details/addToFavorites/{carId}")
     public String addToFavorites(@PathVariable("carId") int carId, HttpSession session, RedirectAttributes redirectAttributes) {
         User user = (User) session.getAttribute("user");
@@ -59,11 +69,31 @@ public class CarController {
                 return "redirect:/car-details/" + carId;
             } else {
                 redirectAttributes.addFlashAttribute("error", "Машина с ID " + carId + " не найдена.");
-                return "redirect:/car-details/"+carId;
+                return "redirect:/car-details/" + carId;
             }
         } else {
             redirectAttributes.addFlashAttribute("error", "Для добавления машины в избранное необходимо войти в систему.");
         }
         return "redirect:/login";
+    }
+
+    // Удаление машины
+    @PostMapping("/cars/delete/{id}")
+    public String deleteCar(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
+        try {
+            carService.deleteCar(id);
+            redirectAttributes.addFlashAttribute("message", "Машина успешно удалена.");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/cars";
+    }
+
+    // Просмотр удаленных автомобилей
+    @GetMapping("/cars/deleted")
+    public String viewDeletedCars(Model model) {
+        List<DeletedCar> deletedCars = carService.getDeletedCars();
+        model.addAttribute("deletedCars", deletedCars);
+        return "deleted-cars";
     }
 }

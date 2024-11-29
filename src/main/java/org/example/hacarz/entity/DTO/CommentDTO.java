@@ -1,6 +1,6 @@
 package org.example.hacarz.entity.DTO;
 
-public class CommentDTO {
+public class CommentDTO { //Используется для вывода комментариев в нужном формате
     private String login;
     private String commentText;
 

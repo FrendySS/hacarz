@@ -13,7 +13,7 @@ public class ContactController {
     @Autowired
     private EmailService emailService;
 
-    @PostMapping("/contact/sendMessage")
+    @PostMapping("/contact/sendMessage") //POST запрос на отравку сообщения обратной связи на почту.
     public String handleFormSubmit(@RequestParam String name, @RequestParam String email,
                                    @RequestParam String subject, @RequestParam String message,
                                    RedirectAttributes redirectAttributes) {

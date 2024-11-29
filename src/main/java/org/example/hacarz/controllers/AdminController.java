@@ -27,7 +27,7 @@ public class AdminController {
     private UserService userService;
     @Autowired
     private CarService carService;
-    @GetMapping("/admin")
+    @GetMapping("/admin") //Get запрос на админ страницу на отображение админ страницы, добавляется пользователь и список всех машин в модель на фронт. Также проверяется роль и авторизация пользователя.
     public String getAdminPage(HttpSession session, Model model){
         User user = (User) session.getAttribute("user");
         List<Car> carsList = carService.getCars();
@@ -41,7 +41,7 @@ public class AdminController {
             else return "redirect:/profile";
         }
     }
-    @PostMapping("/admin")
+    @PostMapping("/admin") //POST запрос на создание нового объекта машины в бд, отправляет данные на сервис, где осуществляется проверка. В зависимости от результата проверки добавляет ошибки или сообщение об успехе в модель.
     public String createCar(@RequestParam String type,
                              @RequestParam String make,
                              @RequestParam String carmodel,
@@ -68,7 +68,7 @@ public class AdminController {
         model.addAttribute("message", "Машина добавлена");
         return "admin";
     }
-    @PostMapping("/admin/delete/{id}")
+    @PostMapping("/admin/delete/{id}") //POST запрос на удаление объекта машины из бд, отправляет на сервис и в зависимости от результата перенаправляет пользователя с соответствующим сообщением.
     public String deleteCar(@PathVariable("id") int id, Model model, RedirectAttributes redirectAttributes){
         Map<String, String> errors = carService.deleteCar(id);
         if (!errors.isEmpty()) {

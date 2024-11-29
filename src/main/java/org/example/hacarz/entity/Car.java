@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="car")
-public class Car {
+public class Car { //Модель машины, автоматически создается в бд таблица car
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int car_id;

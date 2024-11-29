@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Удаленные автомобили</title>
+</head>
+<body>
+<h1>Удаленные автомобили</h1>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Марка</th>
+    <th>Модель</th>
+    <th>Цвет</th>
+    <th>Год</th>
+    <th>Цена</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="car : ${deletedCars}">
+    <td th:text="${car.car_id}"></td>
+    <td th:text="${car.make}"></td>
+    <td th:text="${car.model}"></td>
+    <td th:text="${car.color}"></td>
+    <td th:text="${car.date}"></td>
+    <td th:text="${car.price}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

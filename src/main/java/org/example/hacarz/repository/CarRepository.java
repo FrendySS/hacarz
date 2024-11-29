@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
     @Query(value = "SELECT * FROM car a WHERE a.make ILIKE %:make%", nativeQuery = true)
-    List<Car> findAllByName(String make);
+    List<Car> findAllByMake(String make); // Поиск машин по марке
 }

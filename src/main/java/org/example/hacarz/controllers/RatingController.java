@@ -26,7 +26,7 @@ public class RatingController {
     @Autowired
     private RatingService ratingService;
 
-    @PostMapping("/{carId}/{userId}")
+    @PostMapping("/{carId}/{userId}") //POST запрос на оценку машины пользователем
     public String rateCar(@PathVariable("carId") int carId,
                             @PathVariable("userId") int userId,
                             @RequestParam("rating") int rating) {

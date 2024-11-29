@@ -21,7 +21,7 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-    public Map<String, String> validateCommentData(String commentText) {
+    public Map<String, String> validateCommentData(String commentText) { //Проверка данных коммента на пустоту, совпадение, допустимые символы и т.д. Ошибок нет = сохранение в бд, есть = отправка обратно map ошибок.
         Map<String, String> errors = new HashMap<>();
         if (commentText.isEmpty()) {
             errors.put("commentText", "Текст комментария пуст");
@@ -29,14 +29,14 @@ public class CommentService {
         return errors;
     }
 
-    public Comment addComment(User user_id, Car car, String commentText) {
+    public Comment addComment(User user_id, Car car, String commentText) { //Сохранение комментария в бд
         Comment comment = new Comment();
         comment.setUser(user_id);
         comment.setCar(car);
         comment.setComment(commentText);
         return commentRepository.save(comment);
     }
-    public List<CommentDTO> getCommentsByCarId(int carId) {
+    public List<CommentDTO> getCommentsByCarId(int carId) { //Поиск комментариев по айди, перевод их в DTO
         List<Comment> comments = commentRepository.findByCarId(carId);
         List<CommentDTO> commentDTOs = comments.stream()
                 .map(comment -> new CommentDTO(comment.getUser().getLogin(), comment.getComment()))
